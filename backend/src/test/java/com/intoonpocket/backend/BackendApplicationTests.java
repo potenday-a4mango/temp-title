@@ -1,4 +1,4 @@
-package com.temptitle.backend;
+package com.intoonpocket.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
