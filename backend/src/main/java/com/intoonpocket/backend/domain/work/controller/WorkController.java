@@ -1,7 +1,6 @@
 package com.intoonpocket.backend.domain.work.controller;
 
 import com.intoonpocket.backend.domain.work.dto.InfraResponseDto;
-import lombok.Builder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,6 @@ public class WorkController{
                 .msg("success")
                 .build();
         System.out.println("########### Success!!");
-        return new ResponseEntity<InfraResponseDto>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
