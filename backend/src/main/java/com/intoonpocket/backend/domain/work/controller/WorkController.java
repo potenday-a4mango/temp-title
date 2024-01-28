@@ -17,6 +17,7 @@ public class WorkController{
                 .code(200)
                 .msg("success")
                 .build();
+        System.out.println("########### Success!!");
         return new ResponseEntity<InfraResponseDto>(response, HttpStatus.OK);
     }
 }

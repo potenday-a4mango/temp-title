@@ -11,11 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:8080",
                         "https://localhost:8080",
+                        "http://localhost:3000",
                         "https://web.postman.co/",
-                        "http://101.101.208.125:1025",
-                        "https://101.101.208.125:1025")
+                        "http://101.101.208.125/",
+                        "https://101.101.208.125/")
                 .allowedMethods("GET", "OPTIONS")
-                .allowedHeaders("Authorization", "Content-Type")
                 .allowCredentials(true)
                 .maxAge(3600);
     }
