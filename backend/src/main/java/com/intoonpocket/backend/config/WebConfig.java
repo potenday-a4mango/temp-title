@@ -13,8 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://localhost:8080",
                         "http://localhost:3000",
                         "https://web.postman.co/",
-                        "http://101.101.208.125/",
-                        "https://101.101.208.125/")
+                        "http://101.101.208.125:80/",
+                        "https://101.101.208.125:80/")
                 .allowedMethods("GET", "OPTIONS")
                 .allowCredentials(true)
                 .maxAge(3600);

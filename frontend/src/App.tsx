@@ -12,7 +12,7 @@ function App() {
   axios.defaults.withCredentials = true;
   const test = async () => {
     try {
-      const response = await axios.get("http://118.67.142.96/"); // 백엔드 URL을 여기에 넣어주세요
+      const response = await axios.get("http://118.67.142.96:8080/"); // 백엔드 URL을 여기에 넣어주세요
       console.log("API 호출 결과:", response.data);
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
