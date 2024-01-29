@@ -2,18 +2,14 @@ package com.intoonpocket.backend.domain.work.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CurrentTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "hashtag")
+@Table(name = "work_subject")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Hashtag {
+public class WorkSubject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

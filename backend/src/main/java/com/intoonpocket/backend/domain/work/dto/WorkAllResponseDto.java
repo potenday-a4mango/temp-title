@@ -16,9 +16,9 @@ public class WorkAllResponseDto {
     private String workName;
     private String authorName;
     private String instargramId;
-    private String category;
     private String imageUrl;
     private Long count;
-    private List<String> hashtagList;
+    private List<String> workSubjectList;
+    private List<String> workCategoryList;
 
 }
