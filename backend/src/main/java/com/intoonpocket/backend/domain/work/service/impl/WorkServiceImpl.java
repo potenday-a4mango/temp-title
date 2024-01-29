@@ -1,6 +1,7 @@
 package com.intoonpocket.backend.domain.work.service.impl;
 
 import com.intoonpocket.backend.domain.work.dto.WorkAllResponseDto;
+import com.intoonpocket.backend.domain.work.dto.WorkElement;
 import com.intoonpocket.backend.domain.work.entity.*;
 import com.intoonpocket.backend.domain.work.service.WorkService;
 import com.querydsl.core.QueryResults;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -20,7 +23,8 @@ public class WorkServiceImpl implements WorkService {
     private final QCategory c = QCategory.category;
     private final QSubject s = QSubject.subject;
     private final QWork w = QWork.work;
-    private final QHashtag h = QHashtag.hashtag;
+    private final QWorkSubject ws = QWorkSubject.workSubject;
+    private final QWorkCategory wc = QWorkCategory.workCategory;
 
     public WorkServiceImpl(JPAQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
@@ -32,8 +36,10 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Page<WorkAllResponseDto> findAllWork(Pageable pageable) {
         QueryResults<WorkAllResponseDto> workAllResponseDtos = getAllWork(pageable);
-        addWorkHashtagByWorkId(workAllResponseDtos);
-        return new PageImpl<>(workAllResponseDtos.getResults(), pageable, workAllResponseDtos.getTotal());
+        List<WorkAllResponseDto> result = workAllResponseDtos.getResults();
+        addWorkSubjectByWorkId(result);
+        addWorkCategoryByWorkId(result);
+        return new PageImpl<>(result, pageable, workAllResponseDtos.getTotal());
     }
 
     /*
@@ -47,10 +53,8 @@ public class WorkServiceImpl implements WorkService {
                         w.id, w.name.stringValue().as("workName"),
                         a.name.stringValue().as("authorName"),
                         a.instargramId.stringValue().as("instargramId"),
-                        c.type.stringValue().as("category"),
                         w.imageUrl, w.count))
                 .from(w).join(a).on(w.author.id.eq(a.id))
-                .join(c).on(w.category.id.eq(c.id))
                 .orderBy(w.count.desc()) // 조회수 내림차순 정렬
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -58,22 +62,70 @@ public class WorkServiceImpl implements WorkService {
     }
 
     /*
-        조회한 작품별 해시태그를 Response Dto에 set
+        조회한 작품별 주제(해시태그)를 Response Dto에 set
      */
-    private void addWorkHashtagByWorkId(QueryResults<WorkAllResponseDto> workAllResponseDtos) {
-        List<WorkAllResponseDto> results = workAllResponseDtos.getResults();
-        results.forEach(w -> w.setHashtagList(getWorkHashtag(w.getId())));
+    private void addWorkSubjectByWorkId(List<WorkAllResponseDto> workAllResponseDtos) {
+        // 전체 작품의 주제 get
+        List<WorkElement> workSubjectList = getWorkSubjectList();
+        // 각 작품에 주제 set
+        setWorkElement(workAllResponseDtos, workSubjectList, "subject");
     }
 
     /*
-        작품별 해시태그 조회
+        조회한 작품별 카테고리를 Response DTO에 set
+    */
+    private void addWorkCategoryByWorkId(List<WorkAllResponseDto> workAllResponseDtos) {
+        // 전체 작품의 카테고리 get
+        List<WorkElement> workCategoryList = getWorkCategoryList();
+        // 각 작품에 카테고리 set
+        setWorkElement(workAllResponseDtos, workCategoryList, "category");
+    }
+
+    /*
+        전체 작품의 주제(해시태그) 조회
      */
-    private List<String> getWorkHashtag(Long workId) {
+    private List<WorkElement> getWorkSubjectList() {
         return queryFactory
-                .select(s.type)
-                .from(w).join(h).on(w.id.eq(h.work.id))
-                .join(s).on(s.id.eq(h.subject.id))
-                .where(w.id.eq(workId))
+                .select(Projections.fields(
+                        WorkElement.class, w.id, s.type))
+                .from(w).join(ws).on(w.id.eq(ws.work.id))
+                .join(s).on(s.id.eq(ws.subject.id))
                 .fetch();
+    }
+
+    /*
+        전체 작품의 카테고리 조회
+     */
+    private List<WorkElement> getWorkCategoryList() {
+        return queryFactory
+                .select(Projections.fields(
+                        WorkElement.class, w.id, c.type))
+                .from(w).join(wc).on(w.id.eq(wc.work.id))
+                .join(c).on(c.id.eq(wc.category.id))
+                .fetch();
+    }
+
+    /*
+        작품별 주제 또는 카테고리 set
+     */
+    private void setWorkElement(List<WorkAllResponseDto> workAllResponseDtos, List<WorkElement> workElementList, String elementType) {
+        workAllResponseDtos.forEach(workResponse -> {
+            List<String> list = new ArrayList<>();
+
+            Iterator<WorkElement> iterator = workElementList.iterator();
+            while (iterator.hasNext()) {
+                WorkElement workElement = iterator.next();
+
+                if (workElement.getId().equals(workResponse.getId())) {
+                    list.add(workElement.getType());
+                    iterator.remove();
+                }
+            }
+            if (elementType.equals("subject")) {
+                workResponse.setWorkSubjectList(list);
+            } else if (elementType.equals("category")) {
+                workResponse.setWorkCategoryList(list);
+            }
+        });
     }
 }
