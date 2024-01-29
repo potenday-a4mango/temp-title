@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-public class WorkSearchResponseDto {
+public class WorkSearchDto {
     private Long id;
     private String workName;
     private String url;
@@ -18,6 +18,8 @@ public class WorkSearchResponseDto {
     private String authorName;
     private String authorInstargramId;
 
-    private List<Integer> searchTypeList;
-    private List<String> subjectList;
+    private boolean searchedByWorkName;
+    private boolean searchedByHashtag;
+    private boolean searchedByAuthorName;
+    private boolean searchedByAuthorInstargramId;
 }
