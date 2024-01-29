@@ -2,6 +2,7 @@ package com.intoonpocket.backend.domain.work.service.impl;
 
 import com.intoonpocket.backend.domain.work.dto.WorkAllResponseDto;
 import com.intoonpocket.backend.domain.work.dto.WorkElement;
+import com.intoonpocket.backend.domain.work.dto.WorkSearchResponseDto;
 import com.intoonpocket.backend.domain.work.entity.*;
 import com.intoonpocket.backend.domain.work.service.WorkService;
 import com.querydsl.core.QueryResults;
@@ -128,4 +129,11 @@ public class WorkServiceImpl implements WorkService {
             }
         });
     }
+
+    @Override
+    public Page<WorkSearchResponseDto> searchWork(Pageable pageable, String keyword) {
+
+        return null;
+    }
+
 }
