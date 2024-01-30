@@ -10,6 +10,18 @@ export type CardItem = {
   workCategoryList: string[];
 };
 
+export type SearchCardItem = {
+  id: number;
+  workName: string;
+  url: string;
+  imageUrl: string;
+  count: number;
+  authorName: string;
+  authorInstargramId: string;
+  searchTypeList: number[];
+  subjectList: string[];
+};
+
 export type AllWorkCardListsProps = {
   items: CardItem[];
 };
