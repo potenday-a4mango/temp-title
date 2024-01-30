@@ -1,11 +1,11 @@
 import React from 'react';
-import { CardItem, HashTagItem } from '../types/home';
+import { SearchCardItem, HashTagItem } from '../types/home';
 import HashTag from './HashTag';
 
-export default function Card({
-  cardItem,
+export default function SearchCard({
+  searchCardItem,
 }: {
-  cardItem: CardItem;
+  searchCardItem: SearchCardItem;
 }): JSX.Element {
   // img 복사 방지
   const preventImgClick = (
@@ -17,27 +17,28 @@ export default function Card({
 
   return (
     <>
-      {/* TODO: style 차후 수정 / loading 화면 넣기 */}
-      <a href={cardItem.workUrl} target="_blank" rel="noopener noreferrer">
+      <a href={searchCardItem.url}>
         <div>
           <div>
+            {/* TODO: style 차후 수정*/}
             <img
-              src={cardItem.imageUrl}
+              src={searchCardItem.imageUrl}
               onContextMenu={preventImgClick}
               onDragStart={preventImgClick}
               width="250px"
             />
           </div>
           <div>
-            <h5>{cardItem.authorName}</h5>
-            <h5>{`${cardItem.count}회`}</h5>
+            <h5>{searchCardItem.authorName}</h5>
+            <h5>{`@${searchCardItem.authorInstargramId}`}</h5>
+            <ul>
+              {searchCardItem.subjectList.map(
+                (item: HashTagItem, idx: number) => (
+                  <HashTag key={idx} hashTagItem={item} />
+                ),
+              )}
+            </ul>
           </div>
-          <h5>{`@${cardItem.instargramId}`}</h5>
-          <ul>
-            {cardItem.workSubjectList.map((item: HashTagItem, idx: number) => (
-              <HashTag key={idx} hashTagItem={item} />
-            ))}
-          </ul>
         </div>
       </a>
       {/* TODO: style 차후 수정 */}

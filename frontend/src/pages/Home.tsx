@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import workCategoryListState from '../recoil/cardList/atom';
 import Card from '../components/Card';
 import { CardItem } from '../types/home';
+import MainHeader from '../layouts/MainHeader';
 
 export default function Home(): JSX.Element {
   const [allWorkCardLists, setAllWorkCardLists] = useState<CardItem[]>([]);
@@ -13,7 +14,7 @@ export default function Home(): JSX.Element {
   const pageSize = 2;
 
   // API 호출
-  const fetchData = () => {
+  const fetchData = (): void => {
     allProductGetApi()
       .then((res) => {
         if (res.status === 200) {
@@ -65,6 +66,7 @@ export default function Home(): JSX.Element {
 
   return (
     <div>
+      <MainHeader />
       <h1>MAIN</h1>
       <ul>
         {displayedCardLists.map((item: CardItem) => (

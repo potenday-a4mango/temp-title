@@ -1,5 +1,10 @@
 import React from 'react';
+import SearchBar from '../components/SearchBar';
 
 export default function Search() {
-  return <div>검색화면</div>;
+  return (
+    <>
+      <SearchBar />
+    </>
+  );
 }
