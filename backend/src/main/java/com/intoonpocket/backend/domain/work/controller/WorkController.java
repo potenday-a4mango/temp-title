@@ -1,8 +1,10 @@
 package com.intoonpocket.backend.domain.work.controller;
 
+import com.intoonpocket.backend.config.WebConfig;
 import com.intoonpocket.backend.domain.work.dto.WorkAllResponseDto;
 import com.intoonpocket.backend.domain.work.dto.WorkSearchResponseDto;
 import com.intoonpocket.backend.domain.work.service.WorkService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
