@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Category from '../components/Category';
 
 export default function MainHeader() {
   return (
@@ -16,6 +17,7 @@ export default function MainHeader() {
           <Link to="/result">검색결과 화면</Link>
         </li>
       </ul>
+      <Category />
     </>
   );
 }
