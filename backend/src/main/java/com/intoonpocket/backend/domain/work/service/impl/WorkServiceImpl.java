@@ -1,9 +1,6 @@
 package com.intoonpocket.backend.domain.work.service.impl;
 
-import com.intoonpocket.backend.domain.work.dto.WorkAllResponseDto;
-import com.intoonpocket.backend.domain.work.dto.WorkElement;
-import com.intoonpocket.backend.domain.work.dto.WorkSearchDto;
-import com.intoonpocket.backend.domain.work.dto.WorkSearchResponseDto;
+import com.intoonpocket.backend.domain.work.dto.*;
 import com.intoonpocket.backend.domain.work.entity.*;
 import com.intoonpocket.backend.domain.work.service.WorkService;
 import com.querydsl.core.QueryResults;
@@ -11,16 +8,19 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class WorkServiceImpl implements WorkService {
     private final JPAQueryFactory queryFactory;
     private final QAuthor a = QAuthor.author;
@@ -38,6 +38,7 @@ public class WorkServiceImpl implements WorkService {
         전체 작품 조회
      */
     @Override
+    @Transactional
     public Page<WorkAllResponseDto> findAllWork(Pageable pageable) {
         QueryResults<WorkAllResponseDto> workAllResponseDtos = getAllWork(pageable);
         List<WorkAllResponseDto> result = workAllResponseDtos.getResults();
@@ -137,6 +138,7 @@ public class WorkServiceImpl implements WorkService {
         작품 검색 : 작품명, 해시태그, 작가명, 작가 계정
      */
     @Override
+    @Transactional
     public Page<WorkSearchResponseDto> searchWork(Pageable pageable, String keyword) {
         // keyword를 포함하는 카드 조회
         QueryResults<WorkSearchDto> workList = getWorkContainsKeyword(pageable, keyword);
@@ -220,5 +222,19 @@ public class WorkServiceImpl implements WorkService {
                 .join(s).on(s.id.eq(ws.subject.id))
                 .where(w.id.eq(work.getId()))
                 .fetch();
+    }
+
+    /*
+        작품의 조회수 증가
+     */
+    @Override
+    @Transactional
+    public void updateWorkCount(CountRequestDto countRequestDto) {
+        long affectedRows = queryFactory
+                .update(w)
+                .where(w.id.eq(countRequestDto.getWorkId()))
+                .set(w.count, w.count.add(1))
+                .execute();
+        System.out.println("업데이트된 레코드 수: " + affectedRows);
     }
 }
