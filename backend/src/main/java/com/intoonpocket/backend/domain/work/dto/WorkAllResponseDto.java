@@ -15,6 +15,7 @@ public class WorkAllResponseDto {
     private Long id;
     private String workName;
     private String authorName;
+    private String workUrl;
     private String instargramId;
     private String imageUrl;
     private Long count;
