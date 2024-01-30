@@ -59,7 +59,7 @@ public class WorkServiceImpl implements WorkService {
                         a.name.stringValue().as("authorName"),
                         a.instargramId.stringValue().as("instargramId")))
                 .from(w).join(a).on(w.author.id.eq(a.id))
-                .orderBy(w.count.desc()) // 조회수 내림차순 정렬
+                .orderBy(w.count.desc(), w.name.asc()) // 조회수 내림차순, 사전순 오름차순 정렬
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
@@ -194,7 +194,7 @@ public class WorkServiceImpl implements WorkService {
                         .or(a.instargramId.containsIgnoreCase(keyword))
                         .or(a.name.containsIgnoreCase(keyword))
                 )
-                .orderBy(w.count.desc())
+                .orderBy(w.count.desc(), w.name.asc(), a.name.asc()) // 조회수 내림차순, 사전순 오름차순, 작가명 오름차순 정렬
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
