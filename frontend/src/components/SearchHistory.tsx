@@ -5,7 +5,7 @@ import { SearchHistoryProps } from '../types/search';
 
 export default function SearchHistory({
   onHistoryKeywordClick,
-}: SearchHistoryProps) {
+}: SearchHistoryProps): JSX.Element {
   // Recoil 상태 읽어오기
   const [searchHistoryList, setSearchHistoryList] = useRecoilState(
     SearchHistoryListState,

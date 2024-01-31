@@ -1,18 +1,8 @@
 import React from 'react';
 import { CardItem, HashTagItem } from '../types/home';
 import HashTag from './HashTag';
-import { InstagramEmbed } from 'react-social-media-embed';
-
-// TODO: 논의) 인스타그램 이동 함수
-function openInstagram(url: string, username: string) {
-  // 앱으로 이동 ? or iframe으로 인스타 웹에 보여주기
-  window.location.href = `instagram://user?username=${username}`;
-
-  // 만약 앱 이동이 작동하지 않으면 2초 후에 웹 URL로 변경
-  setTimeout(function () {
-    window.location.href = url;
-  }, 2000);
-}
+// import { InstagramEmbed } from 'react-social-media-embed';
+import { countPostApi } from '../api/maincard';
 
 export default function Card({
   cardItem,
@@ -27,24 +17,40 @@ export default function Card({
     e.preventDefault();
   };
 
+  // TODO: 논의) 인스타그램 이동 함수
+  const handleMoveInsta = async (
+    url: string,
+    workId: number,
+  ): Promise<void> => {
+    // countPostApi 에 요청이 성공한 후 링크 이동
+    try {
+      const response = await countPostApi(workId);
+      if (response.status === 200) {
+        window.location.href = url;
+      } else {
+        console.error('API 응답이 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   return (
     <>
       {/* TODO: style 차후 수정 / loading 화면 넣기 */}
-      <div
-        onClick={() => openInstagram(cardItem.workUrl, cardItem.instargramId)}
-      >
+      <div onClick={() => handleMoveInsta(cardItem.workUrl, cardItem.id)}>
         <div>
           <div>
             {/* TODO: 인스타 임베드 or 이미지 사진 보여주기 논의 */}
-            {/* <img
+            <img
               src={cardItem.imageUrl}
               onContextMenu={preventImgClick}
               onDragStart={preventImgClick}
               width="250px"
-            /> */}
-            <div>
+            />
+            {/* <div>
               <InstagramEmbed url={cardItem.workUrl} width="350px" />
-            </div>
+            </div> */}
           </div>
           <div>
             <h5>{cardItem.authorName}</h5>

@@ -36,7 +36,7 @@ export default function Home(): JSX.Element {
   };
 
   // 스크롤
-  const handleScroll = () => {
+  const handleScroll = (): void => {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;

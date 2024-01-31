@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CATEGORY } from '../constants/category';
 import { useRecoilState } from 'recoil';
 import workCategoryListState from '../recoil/cardList/atom';
