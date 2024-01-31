@@ -1,4 +1,4 @@
-package com.intoonpocket.backend.domain.work.dto;
+package com.intoonpocket.backend.domain.work.dto.response;
 
 import lombok.*;
 
