@@ -1,14 +1,16 @@
 package com.intoonpocket.backend.domain.work.controller;
 
+import com.intoonpocket.backend.config.WebConfig;
+import com.intoonpocket.backend.domain.work.dto.CountRequestDto;
 import com.intoonpocket.backend.domain.work.dto.WorkAllResponseDto;
 import com.intoonpocket.backend.domain.work.dto.WorkSearchResponseDto;
 import com.intoonpocket.backend.domain.work.service.WorkService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -26,5 +28,11 @@ public class WorkController{
     @GetMapping("/search/{keyword}")
     public Page<WorkSearchResponseDto> searchWork(Pageable pageable, @PathVariable String keyword) {
         return workService.searchWork(pageable, keyword);
+    }
+
+    @PostMapping("/count")
+    public ResponseEntity updeateWorkCount(@RequestBody CountRequestDto countRequestDto) {
+        workService.updateWorkCount(countRequestDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
