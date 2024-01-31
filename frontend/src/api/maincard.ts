@@ -20,3 +20,15 @@ export const allProductGetApi = async (
     throw error;
   }
 };
+
+export const countPostApi = async (workId: number) => {
+  try {
+    const response: AxiosResponse = await jsonInstance.post(`/api/v1/count`, {
+      workId,
+    });
+    return response;
+  } catch (error) {
+    console.log('실패 : ', error);
+    throw error;
+  }
+};
