@@ -1,6 +1,8 @@
 import React from 'react';
-import { SearchCardItem, HashTagItem } from '../types/home';
+import { HashTagItem } from '../types/home';
+import { SearchCardItem } from '../types/search';
 import HashTag from './HashTag';
+import { InstagramEmbed } from 'react-social-media-embed';
 
 export default function SearchCard({
   searchCardItem,
@@ -21,12 +23,18 @@ export default function SearchCard({
         <div>
           <div>
             {/* TODO: style 차후 수정*/}
+            {/* TODO: 인스타 임베드 or 이미지 사진 보여주기 논의 */}
+            {/* 
             <img
               src={searchCardItem.imageUrl}
               onContextMenu={preventImgClick}
               onDragStart={preventImgClick}
               width="250px"
             />
+             */}
+            <div>
+              <InstagramEmbed url={searchCardItem.url} width="350px" />
+            </div>
           </div>
           <div>
             <h5>{searchCardItem.authorName}</h5>
