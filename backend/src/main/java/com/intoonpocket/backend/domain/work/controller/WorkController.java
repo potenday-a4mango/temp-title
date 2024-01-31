@@ -1,11 +1,11 @@
 package com.intoonpocket.backend.domain.work.controller;
 
-import com.intoonpocket.backend.config.WebConfig;
-import com.intoonpocket.backend.domain.work.dto.CountRequestDto;
-import com.intoonpocket.backend.domain.work.dto.WorkAllResponseDto;
-import com.intoonpocket.backend.domain.work.dto.WorkSearchResponseDto;
+import com.intoonpocket.backend.domain.work.exception.InvalidWorkIdException;
+import com.intoonpocket.backend.domain.work.dto.request.CountRequestDto;
+import com.intoonpocket.backend.domain.work.dto.response.WorkAllResponseDto;
+import com.intoonpocket.backend.domain.work.dto.response.WorkSearchResponseDto;
 import com.intoonpocket.backend.domain.work.service.WorkService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class WorkController{
     }
 
     @PostMapping("/count")
-    public ResponseEntity updeateWorkCount(@RequestBody CountRequestDto countRequestDto) {
+    public ResponseEntity updeateWorkCount(@Valid @RequestBody CountRequestDto countRequestDto) throws InvalidWorkIdException {
         workService.updateWorkCount(countRequestDto);
         return new ResponseEntity(HttpStatus.OK);
     }

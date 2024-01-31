@@ -1,4 +1,4 @@
-package com.intoonpocket.backend.domain.work.dto;
+package com.intoonpocket.backend.domain.work.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class CountRequestDto {
-    private Long workId;
+public class WorkElement {
+    private Long id; // work id
+    private String type; // subject or category type
 }

@@ -1,15 +1,16 @@
-package com.intoonpocket.backend.domain.work.dto;
+package com.intoonpocket.backend.domain.work.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class WorkElement {
-    private Long id; // work id
-    private String type; // subject or category type
+public class CountRequestDto {
+
+    private Long workId;
 }

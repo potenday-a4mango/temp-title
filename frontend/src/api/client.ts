@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import { Options, AxiosApiFunction } from '../types/api';
 
-const BASE_URL = 'http://118.67.142.96:8080';
-// const BASE_URL = 'http://localhost:8080';
+// const BASE_URL = 'http://118.67.142.96:8080';
+const BASE_URL = 'http://localhost:8080';
 const HEADER_JSON = {
   headers: {
     'Content-Type': 'application/json',

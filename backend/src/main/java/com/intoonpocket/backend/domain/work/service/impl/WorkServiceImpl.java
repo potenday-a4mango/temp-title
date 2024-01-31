@@ -1,6 +1,12 @@
 package com.intoonpocket.backend.domain.work.service.impl;
 
-import com.intoonpocket.backend.domain.work.dto.*;
+import com.intoonpocket.backend.common.exception.errorcode.CustomErrorCode;
+import com.intoonpocket.backend.domain.work.dto.request.CountRequestDto;
+import com.intoonpocket.backend.domain.work.dto.response.WorkAllResponseDto;
+import com.intoonpocket.backend.domain.work.dto.response.WorkElement;
+import com.intoonpocket.backend.domain.work.dto.response.WorkSearchDto;
+import com.intoonpocket.backend.domain.work.dto.response.WorkSearchResponseDto;
+import com.intoonpocket.backend.domain.work.exception.InvalidWorkIdException;
 import com.intoonpocket.backend.domain.work.entity.*;
 import com.intoonpocket.backend.domain.work.service.WorkService;
 import com.querydsl.core.QueryResults;
@@ -8,7 +14,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -229,12 +234,15 @@ public class WorkServiceImpl implements WorkService {
      */
     @Override
     @Transactional
-    public void updateWorkCount(CountRequestDto countRequestDto) {
-        long affectedRows = queryFactory
+    public void updateWorkCount(CountRequestDto countRequestDto) throws InvalidWorkIdException {
+        long countedWork = queryFactory
                 .update(w)
                 .where(w.id.eq(countRequestDto.getWorkId()))
                 .set(w.count, w.count.add(1))
                 .execute();
-        System.out.println("업데이트된 레코드 수: " + affectedRows);
+
+        // 프론트로부터 전달 받은 id로 조회된 작품 없는 경우 예외 발생
+        if(countedWork == 0)
+            throw new InvalidWorkIdException();
     }
 }
