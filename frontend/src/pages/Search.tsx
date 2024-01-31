@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import SearchCard from '../components/SearchCard';
 import SearchHistory from '../components/SearchHistory';
@@ -9,8 +10,10 @@ import { SearchCardItem } from '../types/search';
 import { useRecoilState } from 'recoil';
 import SearchHistoryListState from '../recoil/searchHistory/atom';
 
-export default function Search() {
-  const [keyword, setKeyword] = useState('');
+export default function Search(): JSX.Element {
+  const location = useLocation();
+  const state = location.state as { resultSearchKeyword: string };
+  const [keyword, setKeyword] = useState(state?.resultSearchKeyword || '');
   const [searchedCardLists, setSearchedCardLists] = useState<SearchCardItem[]>(
     [],
   );
@@ -21,6 +24,8 @@ export default function Search() {
   const disableSubmit =
     keyword.trim().length === 0 ||
     (keyword.trim().length > 0 && searchedCardLists.length === 0);
+
+  const navigate = useNavigate();
 
   // 검색 내역 클릭 시, 해당 키워드로 검색
   const handleKeywordClick = (content: string) => {
@@ -65,6 +70,9 @@ export default function Search() {
 
       return newHistoryList;
     });
+
+    // state로 keyword 검색어 전달
+    navigate('/result', { state: { keyword } });
   };
 
   const handleScroll = () => {
