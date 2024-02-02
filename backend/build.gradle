@@ -72,3 +72,11 @@ tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test
 }
+
+jacocoTestReport {
+	dependsOn test
+
+	reports {
+		html.required = true
+	}
+}
