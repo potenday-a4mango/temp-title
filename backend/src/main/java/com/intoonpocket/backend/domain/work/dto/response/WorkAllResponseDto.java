@@ -1,9 +1,6 @@
 package com.intoonpocket.backend.domain.work.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,6 +8,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class WorkAllResponseDto {
     private Long id;
     private String workName;
