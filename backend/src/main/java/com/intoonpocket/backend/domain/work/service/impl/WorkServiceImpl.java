@@ -200,6 +200,12 @@ public class WorkServiceImpl implements WorkService {
                         ))
                         .or(a.instargramId.containsIgnoreCase(keyword))
                         .or(a.name.containsIgnoreCase(keyword))
+                        .or(w.id.in(
+                                JPAExpressions.select(wc.work.id)
+                                        .from(wc)
+                                        .innerJoin(c).on(wc.category.id.eq(c.id))
+                                        .where(c.type.containsIgnoreCase(keyword))
+                        ))
                 )
                 .orderBy(w.count.desc(), w.name.asc(), a.name.asc()) // 조회수 내림차순, 사전순 오름차순, 작가명 오름차순 정렬
                 .offset(pageable.getOffset())
