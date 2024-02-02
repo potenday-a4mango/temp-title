@@ -1,20 +1,12 @@
 import React from 'react';
+import onboardingImage from '../assets/images/on-boarding-image.svg';
+import { ONBOARDING } from '../constants/text';
 
 export default function Onboarding(): JSX.Element {
   return (
-    // TODO: style 변경, 효과 추가
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        // backgroundImage: `url(${onboardingImage})`,
-        backgroundColor: '#D0E933',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    ></div>
+    <div className="bg-custom-green fixed inset-0 flex flex-col items-center justify-center gap-5	">
+      <h1 className="text-3xl font-medium	">{ONBOARDING}</h1>
+      <img className="h-60 w-60" src={onboardingImage} alt="onboarding-image" />
+    </div>
   );
 }
