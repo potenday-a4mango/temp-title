@@ -8,7 +8,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
 public class WorkAllResponseDto {
     private Long id;
     private String workName;
