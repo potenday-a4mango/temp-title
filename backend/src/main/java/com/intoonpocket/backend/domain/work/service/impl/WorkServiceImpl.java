@@ -56,7 +56,7 @@ public class WorkServiceImpl implements WorkService {
          작품의 해시태그 리스트를 제외한 데이터 조회.
          작품 아이디, 작품명, 작가명, 작가 인스타그램 아이디, 카테고리, 이미지 url, 조회수
      */
-    public QueryResults<WorkAllResponseDto> getAllWork(Pageable pageable) {
+    private QueryResults<WorkAllResponseDto> getAllWork(Pageable pageable) {
         return queryFactory
                 .select(Projections.fields(
                         WorkAllResponseDto.class,
@@ -74,7 +74,7 @@ public class WorkServiceImpl implements WorkService {
     /*
         조회한 작품별 주제(해시태그)를 Response Dto에 set
      */
-    public void addWorkSubjectByWorkId(List<WorkAllResponseDto> workAllResponseDtos) {
+    private void addWorkSubjectByWorkId(List<WorkAllResponseDto> workAllResponseDtos) {
         // 전체 작품의 주제 get
         List<WorkElement> workSubjectList = getWorkSubjectList();
         // 각 작품에 주제 set
@@ -84,7 +84,7 @@ public class WorkServiceImpl implements WorkService {
     /*
         조회한 작품별 카테고리를 Response DTO에 set
     */
-    public void addWorkCategoryByWorkId(List<WorkAllResponseDto> workAllResponseDtos) {
+    private void addWorkCategoryByWorkId(List<WorkAllResponseDto> workAllResponseDtos) {
         // 전체 작품의 카테고리 get
         List<WorkElement> workCategoryList = getWorkCategoryList();
         // 각 작품에 카테고리 set
@@ -94,7 +94,7 @@ public class WorkServiceImpl implements WorkService {
     /*
         전체 작품의 주제(해시태그) 조회
      */
-    public List<WorkElement> getWorkSubjectList() {
+    private List<WorkElement> getWorkSubjectList() {
         return queryFactory
                 .select(Projections.fields(
                         WorkElement.class, w.id, s.type))
@@ -106,7 +106,7 @@ public class WorkServiceImpl implements WorkService {
     /*
         전체 작품의 카테고리 조회
      */
-    public List<WorkElement> getWorkCategoryList() {
+    private List<WorkElement> getWorkCategoryList() {
         return queryFactory
                 .select(Projections.fields(
                         WorkElement.class, w.id, c.type))
@@ -118,7 +118,7 @@ public class WorkServiceImpl implements WorkService {
     /*
         작품별 주제 또는 카테고리 set
      */
-    public void setWorkElement(List<WorkAllResponseDto> workAllResponseDtos, List<WorkElement> workElementList, String elementType) {
+    private void setWorkElement(List<WorkAllResponseDto> workAllResponseDtos, List<WorkElement> workElementList, String elementType) {
         workAllResponseDtos.forEach(workResponse -> {
             List<String> list = new ArrayList<>();
 

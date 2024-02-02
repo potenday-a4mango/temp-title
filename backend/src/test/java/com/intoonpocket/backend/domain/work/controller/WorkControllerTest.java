@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intoonpocket.backend.domain.work.dto.request.CountRequestDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkAllResponseDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkSearchResponseDto;
-import com.intoonpocket.backend.domain.work.service.impl.WorkServiceImpl;
+import com.intoonpocket.backend.domain.work.service.WorkService;
 import com.querydsl.core.QueryResults;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureWebMvc
 class WorkControllerTest {
     @MockBean
-    WorkServiceImpl workService;
+    WorkService workService;
     @Autowired
     private MockMvc mockMvc;
 
