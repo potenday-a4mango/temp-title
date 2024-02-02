@@ -6,5 +6,9 @@ export default function HashTag({
 }: {
   hashTagItem: HashTagItem;
 }): JSX.Element {
-  return <li>{`#${hashTagItem}`}</li>;
+  return (
+    <div className="bg-custom-light-gray rounded-custom-s-radius">
+      <li className="text-custom-gray px-custom-gap-7 text-xs">{`#${hashTagItem}`}</li>
+    </div>
+  );
 }
