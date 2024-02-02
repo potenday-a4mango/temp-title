@@ -1,28 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import loadingState from '../recoil/loading/atom';
+import loadingGif from '../assets/images/loading-image.gif';
 
 export default function LoadingScreen(): JSX.Element | null {
   const isLoading = useRecoilValue(loadingState);
+
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isLoading]);
 
   if (!isLoading) {
     return null;
   }
 
   return (
-    // TODO: style, img 수정하기
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 9999,
-      }}
-    >
-      {/* <img src="/path/to/loading-image.png" alt="Loading" /> */}
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-50">
+      <img className="size-32" src={loadingGif} alt="loading-image" />
     </div>
   );
 }
