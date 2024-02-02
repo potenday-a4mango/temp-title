@@ -1,8 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
-import { Options, AxiosApiFunction } from '../types/api';
+import { AxiosApiFunction } from '../types/api';
 
-const BASE_URL = 'http://118.67.142.96:8080';
-// const BASE_URL = 'http://localhost:8080';
+if (!process.env.REACT_APP_BASE_URL) {
+  throw new Error('REACT_APP_BASE_URL is not defined');
+}
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const HEADER_JSON = {
   headers: {
     'Content-Type': 'application/json',

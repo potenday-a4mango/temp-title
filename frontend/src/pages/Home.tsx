@@ -10,7 +10,7 @@ export default function Home(): JSX.Element {
   const [allWorkCardLists, setAllWorkCardLists] = useState<CardItem[]>([]);
   const [displayedCardLists, setDisplayedCardLists] = useState<CardItem[]>([]);
   const selectedCategory = useRecoilValue(workCategoryListState);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(4);
   const pageSize = 2;
 
   // API 호출
@@ -67,12 +67,13 @@ export default function Home(): JSX.Element {
   return (
     <div>
       <MainHeader />
-      <h1>MAIN</h1>
-      <ul>
+      <div className="gap-custom-gap-20 grid-cols-custom-grid-2 grid justify-items-center	p-5">
         {displayedCardLists.map((item: CardItem) => (
-          <Card key={item.id} cardItem={item} />
+          <div className="w-custom-card-image" key={item.id}>
+            <Card cardItem={item} />
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

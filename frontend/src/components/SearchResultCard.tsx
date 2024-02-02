@@ -1,10 +1,11 @@
 import React from 'react';
-import { HashTagItem } from '../types/home';
 import { SearchCardItem } from '../types/search';
-import HashTag from './HashTag';
 import { countPostApi } from '../api/maincard';
+import countImage from '../assets/images/count-image.svg';
+import { HashTagItem } from '../types/home';
+import HashTag from './HashTag';
 
-export default function SearchCard({
+export default function SearchResultCard({
   searchCardItem,
 }: {
   searchCardItem: SearchCardItem;
@@ -38,22 +39,26 @@ export default function SearchCard({
     <>
       <div
         onClick={() => handleMoveInsta(searchCardItem.url, searchCardItem.id)}
-        className="flex gap-4"
+        className="gap-custom-gap-7 flex flex-col"
       >
         <div>
           <img
             src={searchCardItem.imageUrl}
             onContextMenu={preventImgClick}
             onDragStart={preventImgClick}
-            className="size-custom-minicard-image	rounded-custom-m-radius border-2 border-black object-cover"
+            className="size-custom-card-image rounded-custom-m-radius border-2 border-black object-cover"
           />
         </div>
-        <div className="flex flex-col justify-center">
-          <div className="flex flex-col gap-1">
-            <h5 className="text-lg font-bold">{searchCardItem.authorName}</h5>
-            <h5 className="text-custom-semi-black text-sm">{`@${searchCardItem.authorInstargramId}`}</h5>
+        <div>
+          <div className="flex flex-row items-center justify-between ">
+            <p className="text-base font-bold	">{searchCardItem.authorName}</p>
+            <p className="flex gap-1 pt-px">
+              <img src={countImage} alt="count-image" />
+              <span className="text-custom-middle-gray text-sm">{`${searchCardItem.count}`}</span>
+            </p>
           </div>
-          <ul className="pt-custom-gap-5 gap-custom-gap-5 flex">
+          <p className="text-custom-semi-black text-sm">{`@${searchCardItem.authorInstargramId}`}</p>
+          <ul className="pt-custom-gap-5 flex flex-row items-center justify-start gap-1">
             {searchCardItem.subjectList.map(
               (item: HashTagItem, idx: number) => (
                 <HashTag key={idx} hashTagItem={item} />

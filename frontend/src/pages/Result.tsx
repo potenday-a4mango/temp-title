@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { keywordSearchGetApi } from '../api/search';
 import loadingState from '../recoil/loading/atom';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SearchCardItem } from '../types/search';
 import SearchCard from '../components/SearchCard';
 import resultFilterListState from '../recoil/resultList/atom';
 import SearchHeader from '../layouts/SearchHeader';
 import NoResult from '../components/NoResult';
+import SearchResultCard from '../components/SearchResultCard';
 
 export default function Result() {
   const [resultCardLists, setResultCardLists] = useState([]);
@@ -17,8 +18,9 @@ export default function Result() {
 
   const setLoading = useSetRecoilState(loadingState);
   const location = useLocation();
+  const navigate = useNavigate();
   const state = location.state as { keyword: string };
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(6);
   const pageSize = 1;
   const selectedFilter = useRecoilValue(resultFilterListState);
 
@@ -70,7 +72,11 @@ export default function Result() {
 
   // 카테고리 선택 시 & 로딩 상태값 변경 시, API 호출
   useEffect(() => {
-    fetchData();
+    if (!state) {
+      navigate('/wrong'); // state가 없는 경우 404 페이지로 리다이렉트
+    } else {
+      fetchData();
+    }
   }, [selectedFilter, setLoading]);
 
   // pageSize씩 Card 렌더링
@@ -81,18 +87,18 @@ export default function Result() {
 
   return (
     <>
-      <SearchHeader keyword={state.keyword} />
-      <div>
+      {state && <SearchHeader keyword={state.keyword} />}{' '}
+      <section className="p-5">
         {displayedresultCardLists.length > 0 ? (
-          <ul>
+          <ul className="gap-custom-gap-20 grid-cols-custom-grid-2 grid justify-items-center">
             {displayedresultCardLists.map((item: SearchCardItem) => (
-              <SearchCard key={item.id} searchCardItem={item} />
+              <SearchResultCard key={item.id} searchCardItem={item} />
             ))}
           </ul>
         ) : (
           <NoResult />
         )}
-      </div>
+      </section>
     </>
   );
 }

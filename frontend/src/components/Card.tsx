@@ -3,6 +3,7 @@ import { CardItem, HashTagItem } from '../types/home';
 import HashTag from './HashTag';
 // import { InstagramEmbed } from 'react-social-media-embed';
 import { countPostApi } from '../api/maincard';
+import countImage from '../assets/images/count-image.svg';
 
 export default function Card({
   cardItem,
@@ -37,36 +38,34 @@ export default function Card({
 
   return (
     <>
-      {/* TODO: style 차후 수정 / loading 화면 넣기 */}
-      <div onClick={() => handleMoveInsta(cardItem.workUrl, cardItem.id)}>
+      <div
+        onClick={() => handleMoveInsta(cardItem.workUrl, cardItem.id)}
+        className="gap-custom-gap-7 flex flex-col"
+      >
         <div>
-          <div>
-            {/* TODO: 인스타 임베드 or 이미지 사진 보여주기 논의 */}
-            <img
-              src={cardItem.imageUrl}
-              onContextMenu={preventImgClick}
-              onDragStart={preventImgClick}
-              width="250px"
-            />
-            {/* <div>
-              <InstagramEmbed url={cardItem.workUrl} width="350px" />
-            </div> */}
+          <img
+            src={cardItem.imageUrl}
+            onContextMenu={preventImgClick}
+            onDragStart={preventImgClick}
+            className="size-custom-card-image	rounded-custom-m-radius border-2 border-black object-cover"
+          />
+        </div>
+        <div>
+          <div className="flex flex-row items-center justify-between ">
+            <p className="text-base font-bold	">{cardItem.authorName}</p>
+            <p className="flex gap-1 pt-px">
+              <img src={countImage} alt="count-image" />
+              <span className="text-custom-middle-gray text-sm">{`${cardItem.count}`}</span>
+            </p>
           </div>
-          <div>
-            <h5>{cardItem.authorName}</h5>
-            <h5>{`${cardItem.count}회`}</h5>
-          </div>
-          <h5>{`@${cardItem.instargramId}`}</h5>
-          <ul>
+          <p className="text-custom-semi-black text-sm">{`@${cardItem.instargramId}`}</p>
+          <ul className="pt-custom-gap-5 flex flex-row items-center justify-start gap-1">
             {cardItem.workSubjectList.map((item: HashTagItem, idx: number) => (
               <HashTag key={idx} hashTagItem={item} />
             ))}
           </ul>
         </div>
       </div>
-      {/* TODO: style 차후 수정 */}
-      <br />
-      <hr />
     </>
   );
 }
