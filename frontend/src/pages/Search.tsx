@@ -20,7 +20,7 @@ export default function Search(): JSX.Element {
   const [searchHistoryList, setSearchHistoryList] = useRecoilState(
     SearchHistoryListState,
   );
-  const [renderedItemsCount, setRenderedItemsCount] = useState(5);
+  const [renderedItemsCount, setRenderedItemsCount] = useState(6);
   const disableSubmit =
     keyword.trim().length === 0 ||
     (keyword.trim().length > 0 && searchedCardLists.length === 0);
@@ -105,11 +105,10 @@ export default function Search(): JSX.Element {
         disableSubmit={disableSubmit}
         currentKeyword={keyword}
       />
-      <section>
-        <h3>실시간 검색 결과</h3>
+      <section className="p-5">
         {keyword.trim().length > 0 ? (
           searchedCardLists.length > 0 ? (
-            <ul>
+            <ul className="flex flex-col gap-4">
               {searchedCardLists
                 ?.slice(0, renderedItemsCount)
                 .map((item: SearchCardItem) => (

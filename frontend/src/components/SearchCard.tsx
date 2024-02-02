@@ -3,7 +3,6 @@ import { HashTagItem } from '../types/home';
 import { SearchCardItem } from '../types/search';
 import HashTag from './HashTag';
 import { countPostApi } from '../api/maincard';
-// import { InstagramEmbed } from 'react-social-media-embed';
 
 export default function SearchCard({
   searchCardItem,
@@ -18,7 +17,6 @@ export default function SearchCard({
     e.preventDefault();
   };
 
-  // TODO: 논의) 인스타그램 이동 함수
   const handleMoveInsta = async (
     url: string,
     workId: number,
@@ -40,39 +38,30 @@ export default function SearchCard({
     <>
       <div
         onClick={() => handleMoveInsta(searchCardItem.url, searchCardItem.id)}
+        className="flex gap-4"
       >
         <div>
-          <div>
-            {/* TODO: style 차후 수정*/}
-            {/* TODO: 인스타 임베드 or 이미지 사진 보여주기 논의 */}
-
-            <img
-              src={searchCardItem.imageUrl}
-              onContextMenu={preventImgClick}
-              onDragStart={preventImgClick}
-              width="250px"
-            />
-
-            {/* <div>
-              <InstagramEmbed url={searchCardItem.url} width="350px" />
-            </div> */}
+          <img
+            src={searchCardItem.imageUrl}
+            onContextMenu={preventImgClick}
+            onDragStart={preventImgClick}
+            className="size-custom-minicard-image	rounded-custom-m-radius border-2 border-black object-cover"
+          />
+        </div>
+        <div className="flex flex-col justify-center">
+          <div className="flex flex-col gap-1">
+            <h5 className="text-lg font-bold">{searchCardItem.authorName}</h5>
+            <h5 className="text-custom-semi-black text-sm">{`@${searchCardItem.authorInstargramId}`}</h5>
           </div>
-          <div>
-            <h5>{searchCardItem.authorName}</h5>
-            <h5>{`@${searchCardItem.authorInstargramId}`}</h5>
-            <ul>
-              {searchCardItem.subjectList.map(
-                (item: HashTagItem, idx: number) => (
-                  <HashTag key={idx} hashTagItem={item} />
-                ),
-              )}
-            </ul>
-          </div>
+          <ul className="pt-custom-gap-5 gap-custom-gap-5 flex">
+            {searchCardItem.subjectList.map(
+              (item: HashTagItem, idx: number) => (
+                <HashTag key={idx} hashTagItem={item} />
+              ),
+            )}
+          </ul>
         </div>
       </div>
-      {/* TODO: style 차후 수정 */}
-      <br />
-      <hr />
     </>
   );
 }
