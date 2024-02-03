@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -12,10 +12,15 @@ export default function SearchBar({
   currentKeyword,
 }: SearchBarProps): JSX.Element {
   const [keyword, setKeyword] = useState(currentKeyword);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setKeyword(currentKeyword);
   }, [currentKeyword]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
@@ -39,6 +44,7 @@ export default function SearchBar({
       >
         <div className="relative w-full">
           <input
+            ref={inputRef}
             type="text"
             value={keyword}
             onChange={handleInputChange}

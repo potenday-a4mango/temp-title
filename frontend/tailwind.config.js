@@ -68,6 +68,14 @@ module.exports = {
         'custom-grid-2': 'repeat(2, minmax(0, 185px))',
       },
     },
+    variants: {
+      extend: {
+        opacity: ['responsive', 'hover', 'focus', 'group-hover'],
+        translate: ['responsive', 'hover', 'focus', 'group-hover'],
+        scale: ['responsive', 'hover', 'focus', 'group-hover'],
+        rotate: ['responsive', 'hover', 'focus', 'group-hover'],
+      },
+    },
   },
   plugins: [],
 };

@@ -23,13 +23,12 @@ export default function Result() {
   const [page, setPage] = useState(6);
   const pageSize = 1;
   const selectedFilter = useRecoilValue(resultFilterListState);
+  const [animate, setAnimate] = useState(false);
 
-  const fetchData = (): void => {
-    // API 호출 전에 로딩 상태 true
+  const fetchData = (): Promise<void> => {
     setLoading(true);
-
     if (state) {
-      keywordSearchGetApi(state.keyword)
+      return keywordSearchGetApi(state.keyword)
         .then((res) => {
           if (res.status === 200) {
             let filteredItems = res.data.content;
@@ -47,8 +46,10 @@ export default function Result() {
           console.error('Error fetching data:', error);
         })
         .finally(() => {
-          setLoading(false); // API 호출이 끝나면 로딩 상태를 false로 설정
+          setLoading(false);
         });
+    } else {
+      return Promise.resolve();
     }
   };
 
@@ -75,9 +76,13 @@ export default function Result() {
     if (!state) {
       navigate('/wrong'); // state가 없는 경우 404 페이지로 리다이렉트
     } else {
-      fetchData();
+      // 데이터를 가져온 후 애니메이션 실행
+      fetchData().then(() => {
+        setAnimate(true);
+        setTimeout(() => setAnimate(false), 1000);
+      });
     }
-  }, [selectedFilter, setLoading]);
+  }, [selectedFilter, setLoading, selectedFilter]);
 
   // pageSize씩 Card 렌더링
   useEffect(() => {
@@ -90,7 +95,9 @@ export default function Result() {
       {state && <SearchHeader keyword={state.keyword} />}{' '}
       <section className="p-5">
         {displayedresultCardLists.length > 0 ? (
-          <ul className="gap-custom-gap-20 grid-cols-custom-grid-2 grid justify-items-center">
+          <ul
+            className={`gap-custom-gap-20 grid-cols-custom-grid-2 grid justify-items-center ${animate ? 'fade-in' : ''}`}
+          >
             {displayedresultCardLists.map((item: SearchCardItem) => (
               <SearchResultCard key={item.id} searchCardItem={item} />
             ))}

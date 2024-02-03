@@ -15,7 +15,11 @@ export default function MainHeader(): JSX.Element {
       <ul className="bg-custom-green flex h-16 flex-row items-center justify-between px-5 py-4">
         <li>
           <Link to="/">
-            <img src={logo} alt="loading-image" />
+            <img
+              src={logo}
+              alt="loading-image"
+              className="h-[29px] w-[100px] object-fill"
+            />
           </Link>
         </li>
         <li>

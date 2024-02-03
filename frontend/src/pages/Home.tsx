@@ -12,10 +12,11 @@ export default function Home(): JSX.Element {
   const selectedCategory = useRecoilValue(workCategoryListState);
   const [page, setPage] = useState(4);
   const pageSize = 2;
+  const [animate, setAnimate] = useState(false);
 
   // API 호출
-  const fetchData = (): void => {
-    allProductGetApi()
+  const fetchData = (): Promise<void> => {
+    return allProductGetApi()
       .then((res) => {
         if (res.status === 200) {
           const newContent = res.data;
@@ -55,7 +56,10 @@ export default function Home(): JSX.Element {
 
   // 카테고리 선택 시, API 호출
   useEffect(() => {
-    fetchData();
+    fetchData().then(() => {
+      setAnimate(true);
+      setTimeout(() => setAnimate(false), 500);
+    });
   }, [selectedCategory]);
 
   // pageSize씩 Card 렌더링
@@ -67,7 +71,9 @@ export default function Home(): JSX.Element {
   return (
     <div>
       <MainHeader />
-      <div className="gap-custom-gap-20 grid-cols-custom-grid-2 grid justify-items-center	p-5">
+      <div
+        className={`gap-custom-gap-20 grid-cols-custom-grid-2 grid justify-items-center overflow-hidden p-5 ${animate ? 'fade-in' : ''}`}
+      >
         {displayedCardLists.map((item: CardItem) => (
           <div className="w-custom-card-image" key={item.id}>
             <Card cardItem={item} />
