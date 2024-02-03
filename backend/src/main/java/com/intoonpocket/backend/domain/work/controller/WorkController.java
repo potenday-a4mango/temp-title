@@ -31,7 +31,7 @@ public class WorkController{
     }
 
     @PostMapping("/count")
-    public ResponseEntity updeateWorkCount(@Valid @RequestBody CountRequestDto countRequestDto) throws InvalidWorkIdException {
+    public ResponseEntity updateWorkCount(@Valid @RequestBody CountRequestDto countRequestDto) throws InvalidWorkIdException {
         workService.updateWorkCount(countRequestDto);
         return new ResponseEntity(HttpStatus.OK);
     }
