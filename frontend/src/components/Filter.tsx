@@ -15,7 +15,7 @@ export default function Filter(): JSX.Element {
 
   return (
     <>
-      <ul className="bg-custom-semi-black h-custom-height-58 flex items-center gap-2 overflow-x-auto whitespace-nowrap border-b-2 border-black px-5 py-1.5">
+      <ul className="scrollbar-hide flex h-custom-height-58 items-center gap-2 overflow-x-auto whitespace-nowrap border-b-2 border-black bg-custom-semi-black px-5 py-1.5">
         {FILTER.map((item) => (
           <li
             key={item.id}

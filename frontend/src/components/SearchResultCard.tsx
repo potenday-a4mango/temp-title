@@ -39,26 +39,26 @@ export default function SearchResultCard({
     <>
       <div
         onClick={() => handleMoveInsta(searchCardItem.url, searchCardItem.id)}
-        className="gap-custom-gap-7 flex flex-col"
+        className="flex flex-col gap-custom-gap-7"
       >
         <div>
           <img
             src={searchCardItem.imageUrl}
             onContextMenu={preventImgClick}
             onDragStart={preventImgClick}
-            className="size-custom-card-image rounded-custom-m-radius border-2 border-black object-cover"
+            className="object-cover border-2 border-black size-custom-card-image rounded-custom-m-radius"
           />
         </div>
         <div>
           <div className="flex flex-row items-center justify-between ">
-            <p className="text-base font-bold	">{searchCardItem.authorName}</p>
+            <p className="text-base font-bold ">{searchCardItem.authorName}</p>
             <p className="flex gap-1 pt-px">
               <img src={countImage} alt="count-image" />
-              <span className="text-custom-middle-gray text-sm">{`${searchCardItem.count}`}</span>
+              <span className="text-sm text-custom-middle-gray">{`${searchCardItem.count}`}</span>
             </p>
           </div>
-          <p className="text-custom-semi-black text-sm">{`@${searchCardItem.authorInstargramId}`}</p>
-          <ul className="pt-custom-gap-5 flex flex-row items-center justify-start gap-1">
+          <p className="text-sm text-custom-semi-black">{`@${searchCardItem.authorInstargramId}`}</p>
+          <ul className="flex flex-row items-center justify-start gap-1 pt-custom-gap-5">
             {searchCardItem.subjectList.map(
               (item: HashTagItem, idx: number) => (
                 <HashTag key={idx} hashTagItem={item} />
