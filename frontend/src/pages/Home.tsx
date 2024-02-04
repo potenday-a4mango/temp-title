@@ -101,6 +101,7 @@ export default function Home(): JSX.Element {
           </div>
         ))}
       </div>
+      {isLastPage && <div className="h-[70px] w-full"></div>}
     </div>
   );
 }

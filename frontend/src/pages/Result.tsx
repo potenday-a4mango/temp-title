@@ -121,13 +121,16 @@ export default function Result(): JSX.Element {
       {state && <SearchHeader keyword={state.keyword} />}{' '}
       <section className="p-5">
         {resultCardLists.length > 0 ? (
-          <ul
-            className={`grid grid-cols-custom-grid-2 justify-items-center gap-custom-gap-20 ${animate ? 'fade-in' : ''}`}
-          >
-            {resultCardLists.map((item: SearchCardItem) => (
-              <SearchResultCard key={item.id} searchCardItem={item} />
-            ))}
-          </ul>
+          <div>
+            <ul
+              className={`grid grid-cols-custom-grid-2 justify-items-center gap-custom-gap-20 ${animate ? 'fade-in' : ''}`}
+            >
+              {resultCardLists.map((item: SearchCardItem) => (
+                <SearchResultCard key={item.id} searchCardItem={item} />
+              ))}
+            </ul>
+            {isLastPage && <div className="h-[70px] w-full"></div>}
+          </div>
         ) : (
           <NoResult />
         )}

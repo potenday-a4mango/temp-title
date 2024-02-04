@@ -87,8 +87,9 @@ export default function Search(): JSX.Element {
     navigate('/result', { state: { keyword } });
   };
 
-  const handleKeywordClick = (content: string) => {
-    onKeywordChange(content);
+  const handleKeywordClick = (keyword: string) => {
+    resetFiltering();
+    navigate('/result', { state: { keyword } });
   };
 
   const handleScroll = useCallback((): void => {
@@ -109,6 +110,12 @@ export default function Search(): JSX.Element {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [handleScroll]);
+
+  useEffect(() => {
+    if (state?.resultSearchKeyword) {
+      onKeywordChange(state.resultSearchKeyword);
+    }
+  }, [state]);
 
   return (
     <>

@@ -40,7 +40,7 @@ export default function SearchBar({
       <BackArrow />
       <form
         onSubmit={handleSubmit}
-        className="bg-custom-green h-custom-height-82 flex flex-row items-center justify-between px-5 pb-4"
+        className="flex h-custom-height-82 flex-row items-center justify-between bg-custom-green px-5 pb-4"
       >
         <div className="relative w-full">
           <input
@@ -48,7 +48,7 @@ export default function SearchBar({
             type="text"
             value={keyword}
             onChange={handleInputChange}
-            className="h-custom-height-60 rounded-custom-m-radius w-full border-2 border-black pl-4 pr-10 text-xl font-bold"
+            className="h-custom-height-60 w-full rounded-custom-m-radius border-2 border-black pl-4 pr-10 text-xl font-bold"
           />
 
           <button
