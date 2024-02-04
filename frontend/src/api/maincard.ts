@@ -2,11 +2,11 @@ import { jsonInstance } from './client';
 import { AxiosResponse, AxiosError } from 'axios';
 
 export const allProductGetApi = async (
-  page?: number,
-  size?: number,
+  page: number,
+  size: number,
 ): Promise<AxiosResponse> => {
   try {
-    const response: AxiosResponse = await jsonInstance.get('/api/v1/', {
+    const response: AxiosResponse = await jsonInstance.get('/api/v1', {
       params: {
         page: page,
         size: size,
