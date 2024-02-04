@@ -3,12 +3,14 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Result from './pages/Result';
+import NotFound from './pages/NotFound';
 import LoadingScreen from './components/LoadingScreen';
 import Onboarding from './components/Onboarding';
-import NotFound from './pages/NotFound';
+import useResetCategory from './hooks/useResetCategory';
 
 function App(): JSX.Element {
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const resetCategory = useResetCategory();
 
   useEffect(() => {
     const referrer = document.referrer;
@@ -17,6 +19,7 @@ function App(): JSX.Element {
 
     if (!isFromSameSite && !sessionStorage.getItem('visited')) {
       setShowOnboarding(true);
+      resetCategory();
       const timer = setTimeout(() => {
         setShowOnboarding(false);
         sessionStorage.setItem('visited', 'true');
@@ -27,7 +30,7 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <div className="container mx-auto min-h-screen bg-white font-sans">
+    <div className="container min-h-screen mx-auto font-sans bg-white">
       {showOnboarding ? (
         <Onboarding />
       ) : (

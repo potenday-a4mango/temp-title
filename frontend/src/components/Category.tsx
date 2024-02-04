@@ -7,7 +7,7 @@ import { ACTIVE_BTN_STYLES, UNACTIVE_BTN_STYLES } from '../constants/styles';
 export default function Category(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useRecoilState(
     workCategoryListState,
-  ); // 작품카테고리 상태관리
+  );
 
   const selectWorkCategory = (category: string) => {
     setSelectedCategory(category);

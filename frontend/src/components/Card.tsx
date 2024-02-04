@@ -40,26 +40,26 @@ export default function Card({
     <>
       <div
         onClick={() => handleMoveInsta(cardItem.workUrl, cardItem.id)}
-        className="gap-custom-gap-7 flex flex-col"
+        className="flex flex-col gap-custom-gap-7"
       >
         <div>
           <img
             src={cardItem.imageUrl}
             onContextMenu={preventImgClick}
             onDragStart={preventImgClick}
-            className="size-custom-card-image	rounded-custom-m-radius border-2 border-black object-cover"
+            className="object-cover border-2 border-black size-custom-card-image rounded-custom-m-radius"
           />
         </div>
         <div>
           <div className="flex flex-row items-center justify-between ">
-            <p className="text-base font-bold	">{cardItem.authorName}</p>
+            <p className="text-base font-bold ">{cardItem.authorName}</p>
             <p className="flex gap-1 pt-px">
               <img src={countImage} alt="count-image" />
-              <span className="text-custom-middle-gray text-sm">{`${cardItem.count}`}</span>
+              <span className="text-sm text-custom-middle-gray">{`${cardItem.count}`}</span>
             </p>
           </div>
-          <p className="text-custom-semi-black text-sm">{`@${cardItem.instargramId}`}</p>
-          <ul className="pt-custom-gap-5 flex flex-row items-center justify-start gap-1">
+          <p className="text-sm text-custom-semi-black">{`@${cardItem.instargramId}`}</p>
+          <ul className="flex flex-row items-center justify-start gap-1 pt-custom-gap-5">
             {cardItem.workSubjectList.map((item: HashTagItem, idx: number) => (
               <HashTag key={idx} hashTagItem={item} />
             ))}

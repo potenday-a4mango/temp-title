@@ -21,15 +21,15 @@ export default function SearchHeader({
         <BackArrow />
         <div
           onClick={handleMoveSearch}
-          className="bg-custom-green h-custom-height-82 flex flex-row items-center justify-between px-5 pb-4"
+          className="flex flex-row items-center justify-between px-5 pb-4 h-custom-height-82 bg-custom-green"
         >
           <div className="relative w-full">
             <input
               type="text"
               value={keyword}
-              className="h-custom-height-60 rounded-custom-m-radius w-full border-2 border-black pl-4 pr-10 text-xl font-bold"
+              className="w-full pl-4 pr-10 text-xl font-bold border-2 border-black h-custom-height-60 rounded-custom-m-radius"
             />
-            <button className="absolute right-4 top-1/2 -translate-y-1/2 transform text-xl">
+            <button className="absolute text-xl transform -translate-y-1/2 right-4 top-1/2">
               <FontAwesomeIcon icon={faMagnifyingGlass as IconProp} />
             </button>
           </div>

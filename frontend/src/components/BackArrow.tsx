@@ -14,7 +14,7 @@ export default function BackArrow(): JSX.Element {
   };
 
   return (
-    <div className="bg-custom-green h-custom-height-60 items-center px-5 py-4">
+    <div className="items-center px-5 py-4 h-custom-height-60 bg-custom-green">
       <button onClick={goBack}>
         <img src={backArrow} alt="back-arrow" />
       </button>
