@@ -1,9 +1,8 @@
 import React from 'react';
 import { CardItem, HashTagItem } from '../types/home';
 import HashTag from './HashTag';
-// import { InstagramEmbed } from 'react-social-media-embed';
 import { countPostApi } from '../api/maincard';
-import countImage from '../assets/images/count-image.svg';
+import { ReactComponent as CountImage } from '../assets/images/count-image.svg';
 
 export default function Card({
   cardItem,
@@ -47,14 +46,14 @@ export default function Card({
             src={cardItem.imageUrl}
             onContextMenu={preventImgClick}
             onDragStart={preventImgClick}
-            className="object-cover border-2 border-black size-custom-card-image rounded-custom-m-radius"
+            className="size-custom-card-image rounded-custom-m-radius border-2 border-black object-cover"
           />
         </div>
         <div>
           <div className="flex flex-row items-center justify-between ">
             <p className="text-base font-bold ">{cardItem.authorName}</p>
             <p className="flex gap-1 pt-px">
-              <img src={countImage} alt="count-image" />
+              <CountImage />
               <span className="text-sm text-custom-middle-gray">{`${cardItem.count}`}</span>
             </p>
           </div>

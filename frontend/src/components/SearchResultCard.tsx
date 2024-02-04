@@ -1,7 +1,7 @@
 import React from 'react';
 import { SearchCardItem } from '../types/search';
 import { countPostApi } from '../api/maincard';
-import countImage from '../assets/images/count-image.svg';
+import { ReactComponent as CountImage } from '../assets/images/count-image.svg';
 import { HashTagItem } from '../types/home';
 import HashTag from './HashTag';
 
@@ -46,14 +46,14 @@ export default function SearchResultCard({
             src={searchCardItem.imageUrl}
             onContextMenu={preventImgClick}
             onDragStart={preventImgClick}
-            className="object-cover border-2 border-black size-custom-card-image rounded-custom-m-radius"
+            className="size-custom-card-image rounded-custom-m-radius border-2 border-black object-cover"
           />
         </div>
         <div>
           <div className="flex flex-row items-center justify-between ">
             <p className="text-base font-bold ">{searchCardItem.authorName}</p>
             <p className="flex gap-1 pt-px">
-              <img src={countImage} alt="count-image" />
+              <CountImage />
               <span className="text-sm text-custom-middle-gray">{`${searchCardItem.count}`}</span>
             </p>
           </div>

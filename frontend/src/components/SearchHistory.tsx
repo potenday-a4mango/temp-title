@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import SearchHistoryListState from '../recoil/searchHistory/atom';
 import { SearchHistoryProps } from '../types/search';
-import deleteImage from '../assets/images/delete-image.svg';
+import { ReactComponent as DeleteImage } from '../assets/images/delete-image.svg';
 
 export default function SearchHistory({
   onHistoryKeywordClick,
@@ -33,12 +33,12 @@ export default function SearchHistory({
                 <li key={item.id} className="flex justify-between">
                   <span
                     onClick={() => onHistoryKeywordClick(item.content)}
-                    className="text-lg"
+                    className="w-full text-lg"
                   >
                     {item.content}
                   </span>
                   <button onClick={() => handleDelete(item.id)}>
-                    <img src={deleteImage} alt="delete-image" />
+                    <DeleteImage />
                   </button>
                 </li>
               ))}

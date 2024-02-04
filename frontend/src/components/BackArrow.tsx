@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import backArrow from '../assets/images/back-arrow.svg';
+import { ReactComponent as BackArrowImg } from '../assets/images/back-arrow.svg';
 
 export default function BackArrow(): JSX.Element {
   const location = useLocation();
@@ -14,9 +14,9 @@ export default function BackArrow(): JSX.Element {
   };
 
   return (
-    <div className="items-center px-5 py-4 h-custom-height-60 bg-custom-green">
+    <div className="h-custom-height-60 items-center bg-custom-green px-5 py-4">
       <button onClick={goBack}>
-        <img src={backArrow} alt="back-arrow" />
+        <BackArrowImg />
       </button>
     </div>
   );
