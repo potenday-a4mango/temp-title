@@ -1,4 +1,4 @@
-export const CATEGORY = ['전체', '일상', '직장', 'MBTI', '사랑'] as const;
+export const CATEGORY = ['전체', '일상', '사랑', '직장', 'MBTI'] as const;
 export const FILTER = [
   {
     id: 4,
