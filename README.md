@@ -24,6 +24,9 @@
 # 기술 스택
 ### Front-end
 - React
+- TypeScript
+- Recoil
+- tailwindCSS
 
 <br>
 
