@@ -80,6 +80,12 @@ public class WorkController{
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Operation(summary = "작품 등록 전 정보 조회", description = "작품 등록 시 선택할 작가명, 주제, 카테고리 조회", tags = {"Work Controller"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = WorkRegisterInfoDto.class)))
+    })
+    @CommonApiResponses
     @GetMapping("/register")
     public WorkRegisterInfoDto findRegisterInfoList() {
         return workService.findRegisterInfoList();

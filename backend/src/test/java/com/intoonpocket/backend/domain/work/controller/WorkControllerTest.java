@@ -140,9 +140,9 @@ class WorkControllerTest {
     @Test
     @DisplayName("작품 등록시 필요한 정보 전달")
     void findRegisterInfoList() throws Exception {
-        List<AuthorDto> authorDtoList = List.of(new AuthorDto(1L, "authorName1"));
-        List<SubjectDto> subjectDtoList = List.of(new SubjectDto(1L, "subjectType1"));
-        List<CategoryDto> categoryDtoList = List.of(new CategoryDto(1L, "categoryType1"));
+        List<AuthorDto> authorDtoList = List.of(new AuthorDto(1L, "김작가"));
+        List<SubjectDto> subjectDtoList = List.of(new SubjectDto(1L, "공부"));
+        List<CategoryDto> categoryDtoList = List.of(new CategoryDto(1L, "일상"));
         WorkRegisterInfoDto workRegisterInfoDto = new WorkRegisterInfoDto(authorDtoList, subjectDtoList, categoryDtoList);
 
         given(workService.findRegisterInfoList()).willReturn(workRegisterInfoDto);
