@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intoonpocket.backend.domain.work.dto.request.CountRequestDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkAllResponseDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkSearchResponseDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.AuthorDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.CategoryDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.SubjectDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.WorkRegisterInfoDto;
 import com.intoonpocket.backend.domain.work.service.WorkService;
 import com.querydsl.core.QueryResults;
 import org.junit.jupiter.api.DisplayName;
@@ -136,21 +140,21 @@ class WorkControllerTest {
     @Test
     @DisplayName("작품 등록시 필요한 정보 전달")
     void findRegisterInfoList() throws Exception {
-        AuthorDto authorDto = new AuthorDto(1, "authorName1");
-        SubjectDto subjectDto = new SubjectDto(1, "subjectType1");
-        CategoryDto categoryDto = new CategoryDto(1, "categoryType1");
-        WorkRegisterInfoDto workRegisterInfoDto = new WorkRegisterInfoDto(authorDto, subjectDto, categoryDto);
+        List<AuthorDto> authorDtoList = List.of(new AuthorDto(1L, "authorName1"));
+        List<SubjectDto> subjectDtoList = List.of(new SubjectDto(1L, "subjectType1"));
+        List<CategoryDto> categoryDtoList = List.of(new CategoryDto(1L, "categoryType1"));
+        WorkRegisterInfoDto workRegisterInfoDto = new WorkRegisterInfoDto(authorDtoList, subjectDtoList, categoryDtoList);
 
         given(workService.findRegisterInfoList()).willReturn(workRegisterInfoDto);
 
         mockMvc.perform(get("/api/v1/register"))
                 .andDo(print())
-                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.authorDto.id").value(workRegisterInfoDto.authorDto.id))
-                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.authorDto.name").value(workRegisterInfoDto.authorDto.name))
-                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.subjectDto.id").value(workRegisterInfoDto.subjectDto.id))
-                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.subjectDto.type").value(workRegisterInfoDto.subjectDto.type))
-                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.categoryDto.id").value(workRegisterInfoDto.categoryDto.id))
-                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.categoryDto.type").value(workRegisterInfoDto.categoryDto.type))
+                .andExpect(jsonPath("$.authorDtoList[0].id").value(workRegisterInfoDto.getAuthorDtoList().get(0).getId()))
+                .andExpect(jsonPath("$.authorDtoList[0].name").value(workRegisterInfoDto.getAuthorDtoList().get(0).getName()))
+                .andExpect(jsonPath("$.subjectDtoList[0].id").value(workRegisterInfoDto.getSubjectDtoList().get(0).getId()))
+                .andExpect(jsonPath("$.subjectDtoList[0].type").value(workRegisterInfoDto.getSubjectDtoList().get(0).getType()))
+                .andExpect(jsonPath("$.categoryDtoList[0].id").value(workRegisterInfoDto.getCategoryDtoList().get(0).getId()))
+                .andExpect(jsonPath("$.categoryDtoList[0].type").value(workRegisterInfoDto.getCategoryDtoList().get(0).getType()))
                 .andReturn();
 
         verify(workService).findRegisterInfoList();

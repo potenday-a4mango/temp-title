@@ -6,6 +6,10 @@ import com.intoonpocket.backend.domain.work.dto.response.WorkAllResponseDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkElement;
 import com.intoonpocket.backend.domain.work.dto.response.WorkSearchDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkSearchResponseDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.AuthorDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.CategoryDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.SubjectDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.WorkRegisterInfoDto;
 import com.intoonpocket.backend.domain.work.exception.InvalidWorkIdException;
 import com.intoonpocket.backend.domain.work.entity.*;
 import com.intoonpocket.backend.domain.work.service.WorkService;
@@ -250,5 +254,32 @@ public class WorkServiceImpl implements WorkService {
         // 프론트로부터 전달 받은 id로 조회된 작품 없는 경우 예외 발생
         if(countedWork == 0)
             throw new InvalidWorkIdException();
+    }
+
+    @Override
+    @Transactional
+    public WorkRegisterInfoDto findRegisterInfoList() {
+        return new WorkRegisterInfoDto(findAuthorList(), findSubjectList(), findCategoryList());
+    }
+
+    private List<AuthorDto> findAuthorList() {
+        return queryFactory.select(Projections.fields(
+                AuthorDto.class, a.id, a.name))
+                .from(a)
+                .fetch();
+    }
+
+    private List<SubjectDto> findSubjectList() {
+        return queryFactory.select(Projections.fields(
+                        SubjectDto.class, s.id, s.type))
+                .from(s)
+                .fetch();
+    }
+
+    private List<CategoryDto> findCategoryList() {
+        return queryFactory.select(Projections.fields(
+                        CategoryDto.class, c.id, c.type))
+                .from(c)
+                .fetch();
     }
 }
