@@ -1,6 +1,7 @@
 package com.intoonpocket.backend.domain.work.controller;
 
 import com.intoonpocket.backend.common.exception.response.ExceptionResponseDto;
+import com.intoonpocket.backend.domain.work.dto.response.info.WorkRegisterInfoDto;
 import com.intoonpocket.backend.domain.work.exception.InvalidWorkIdException;
 import com.intoonpocket.backend.domain.work.dto.request.CountRequestDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkAllResponseDto;
@@ -77,5 +78,16 @@ public class WorkController{
             @Valid @RequestBody CountRequestDto countRequestDto) throws InvalidWorkIdException {
         workService.updateWorkCount(countRequestDto);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Operation(summary = "작품 등록 전 정보 조회", description = "작품 등록 시 선택할 작가명, 주제, 카테고리 조회", tags = {"Work Controller"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = WorkRegisterInfoDto.class)))
+    })
+    @CommonApiResponses
+    @GetMapping("/register")
+    public WorkRegisterInfoDto findRegisterInfoList() {
+        return workService.findRegisterInfoList();
     }
 }
