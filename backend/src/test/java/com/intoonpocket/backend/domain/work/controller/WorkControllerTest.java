@@ -132,4 +132,28 @@ class WorkControllerTest {
 
         verify(workService).updateWorkCount(refEq(countRequestDto));
     }
+
+    @Test
+    @DisplayName("작품 등록시 필요한 정보 전달")
+    void findRegisterInfoList() throws Exception {
+        AuthorDto authorDto = new AuthorDto(1, "authorName1");
+        SubjectDto subjectDto = new SubjectDto(1, "subjectType1");
+        CategoryDto categoryDto = new CategoryDto(1, "categoryType1");
+        WorkRegisterInfoDto workRegisterInfoDto = new WorkRegisterInfoDto(authorDto, subjectDto, categoryDto);
+
+        given(workService.findRegisterInfoList()).willReturn(workRegisterInfoDto);
+
+        mockMvc.perform(get("/api/v1/register"))
+                .andDo(print())
+                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.authorDto.id").value(workRegisterInfoDto.authorDto.id))
+                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.authorDto.name").value(workRegisterInfoDto.authorDto.name))
+                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.subjectDto.id").value(workRegisterInfoDto.subjectDto.id))
+                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.subjectDto.type").value(workRegisterInfoDto.subjectDto.type))
+                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.categoryDto.id").value(workRegisterInfoDto.categoryDto.id))
+                .andExpect(jsonPath("$.content[0].workRegisterInfoDto.categoryDto.type").value(workRegisterInfoDto.categoryDto.type))
+                .andReturn();
+
+        verify(workService).findRegisterInfoList();
+
+    }
 }
