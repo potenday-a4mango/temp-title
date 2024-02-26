@@ -49,15 +49,15 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(createExceptionEntity(e), e.getHttpStatus());
     }
 
-    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ExceptionResponseDto> unsupportedHttpMethodHandler() {
-        e = CommonErrorCode.UNSUPPORTED_HTTP_METHOD;
-        return new ResponseEntity<>(createExceptionEntity(e), e.getHttpStatus());
-    }
+//    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+//    public ResponseEntity<ExceptionResponseDto> unsupportedHttpMethodHandler() {
+//        e = CommonErrorCode.UNSUPPORTED_HTTP_METHOD;
+//        return new ResponseEntity<>(createExceptionEntity(e), e.getHttpStatus());
+//    }
 
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<ExceptionResponseDto> internalServerErrorHandler() {
-        e = CommonErrorCode.INTERNAL_SERVER_ERROR;
-        return new ResponseEntity<>(createExceptionEntity(e), e.getHttpStatus());
-    }
+//    @ExceptionHandler(value = Exception.class)
+//    public ResponseEntity<ExceptionResponseDto> internalServerErrorHandler() {
+//        e = CommonErrorCode.INTERNAL_SERVER_ERROR;
+//        return new ResponseEntity<>(createExceptionEntity(e), e.getHttpStatus());
+//    }
 }
