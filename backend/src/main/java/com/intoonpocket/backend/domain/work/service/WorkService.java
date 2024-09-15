@@ -1,5 +1,6 @@
 package com.intoonpocket.backend.domain.work.service;
 
+import com.intoonpocket.backend.domain.work.dto.request.WorkRegisterRequestDto;
 import com.intoonpocket.backend.domain.work.dto.response.info.WorkRegisterInfoDto;
 import com.intoonpocket.backend.domain.work.exception.InvalidWorkIdException;
 import com.intoonpocket.backend.domain.work.dto.request.CountRequestDto;
@@ -16,4 +17,6 @@ public interface WorkService {
 
     void updateWorkCount(CountRequestDto countRequestDto) throws InvalidWorkIdException;
     WorkRegisterInfoDto findRegisterInfoList();
+
+    void workRegister(WorkRegisterRequestDto workRegisterRequestDto);
 }

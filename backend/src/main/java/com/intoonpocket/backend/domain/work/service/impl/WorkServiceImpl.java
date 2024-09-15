@@ -2,6 +2,7 @@ package com.intoonpocket.backend.domain.work.service.impl;
 
 import com.intoonpocket.backend.common.exception.errorcode.CustomErrorCode;
 import com.intoonpocket.backend.domain.work.dto.request.CountRequestDto;
+import com.intoonpocket.backend.domain.work.dto.request.WorkRegisterRequestDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkAllResponseDto;
 import com.intoonpocket.backend.domain.work.dto.response.WorkElement;
 import com.intoonpocket.backend.domain.work.dto.response.WorkSearchDto;
@@ -12,6 +13,9 @@ import com.intoonpocket.backend.domain.work.dto.response.info.SubjectDto;
 import com.intoonpocket.backend.domain.work.dto.response.info.WorkRegisterInfoDto;
 import com.intoonpocket.backend.domain.work.exception.InvalidWorkIdException;
 import com.intoonpocket.backend.domain.work.entity.*;
+import com.intoonpocket.backend.domain.work.repository.AuthorRepository;
+import com.intoonpocket.backend.domain.work.repository.SubjectRepository;
+import com.intoonpocket.backend.domain.work.repository.WorkRepository;
 import com.intoonpocket.backend.domain.work.service.WorkService;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
@@ -32,6 +36,9 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class WorkServiceImpl implements WorkService {
     private final JPAQueryFactory queryFactory;
+    private final AuthorRepository authorRepository;
+    private final SubjectRepository subjectRepository;
+
     private final QAuthor a = QAuthor.author;
     private final QCategory c = QCategory.category;
     private final QSubject s = QSubject.subject;
@@ -39,8 +46,10 @@ public class WorkServiceImpl implements WorkService {
     private final QWorkSubject ws = QWorkSubject.workSubject;
     private final QWorkCategory wc = QWorkCategory.workCategory;
 
-    public WorkServiceImpl(JPAQueryFactory queryFactory) {
+    public WorkServiceImpl(JPAQueryFactory queryFactory, AuthorRepository authorRepository, SubjectRepository subjectRepository) {
         this.queryFactory = queryFactory;
+        this.authorRepository = authorRepository;
+        this.subjectRepository = subjectRepository;
     }
 
     /*
@@ -281,5 +290,43 @@ public class WorkServiceImpl implements WorkService {
                         CategoryDto.class, c.id, c.type))
                 .from(c)
                 .fetch();
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void workRegister(WorkRegisterRequestDto request) {
+        // 작가 등록 or 찾기
+        Long authorId = null;
+        if(request.getAuthorInstargramId() != null) {
+            queryFactory.insert(a)
+                    .columns(a.name, a.instargramId)
+                    .values(request.getAuthorName(), request.getAuthorInstargramId())
+                    .execute();
+
+            authorId = queryFactory
+                    .select(a.id).from(a)
+                    .where(a.name.eq(request.getAuthorName())).fetchOne();
+
+        } else {
+            authorId = authorRepository.findByName(request.getAuthorName()).getId();
+        }
+
+        // 주제 등록 or 찾기
+        List<Long> workSubjectIdList = new ArrayList<>();
+        for(String s : request.getWorkSubjectList()) {
+            Subject foundSubject = subjectRepository.findByType(s);
+            if(foundSubject == null) {
+                Long savedSubjectId = subjectRepository.save(Subject.builder().type(s).build()).getId();
+                workSubjectIdList.add(savedSubjectId);
+            } else {
+                workSubjectIdList.add(foundSubject.getId());
+            }
+        }
+
+        // NCP Object Storage bucket에 작품 이미지 업로드
+
+
+
+
     }
 }
