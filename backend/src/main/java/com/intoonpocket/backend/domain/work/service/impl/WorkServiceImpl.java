@@ -295,14 +295,9 @@ public class WorkServiceImpl implements WorkService {
     @Override
     @Transactional(readOnly = false)
     public void workRegister(WorkRegisterRequestDto request) {
+        // 작가 등록 or 찾기
         Long authorId = null;
-        if(request.getAuthorInstargramId() != null) { // 새로운 작가 등록
-//            Author author = Author.builder()
-//                    .name(request.getAuthorName())
-//                    .instargramId(request.getAuthorInstargramId())
-//                    .build();
-//            authorId = authorRepository.save(author).getId();
-
+        if(request.getAuthorInstargramId() != null) {
             queryFactory.insert(a)
                     .columns(a.name, a.instargramId)
                     .values(request.getAuthorName(), request.getAuthorInstargramId())
@@ -316,18 +311,22 @@ public class WorkServiceImpl implements WorkService {
             authorId = authorRepository.findByName(request.getAuthorName()).getId();
         }
 
+        // 주제 등록 or 찾기
         List<Long> workSubjectIdList = new ArrayList<>();
-        Long savedSubjectId = null;
         for(String s : request.getWorkSubjectList()) {
             Subject foundSubject = subjectRepository.findByType(s);
             if(foundSubject == null) {
-                savedSubjectId = subjectRepository.save(Subject.builder().type(s).build()).getId();
+                Long savedSubjectId = subjectRepository.save(Subject.builder().type(s).build()).getId();
                 workSubjectIdList.add(savedSubjectId);
             } else {
                 workSubjectIdList.add(foundSubject.getId());
             }
         }
 
-    }
+        // NCP Object Storage bucket에 작품 이미지 업로드
 
+
+
+
+    }
 }

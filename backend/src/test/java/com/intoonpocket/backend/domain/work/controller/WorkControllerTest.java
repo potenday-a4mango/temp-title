@@ -60,7 +60,7 @@ class WorkControllerTest {
 
         given(workService.findAllWork(pageable)).willReturn(new PageImpl<>(results.getResults(), pageable, results.getTotal()));
 
-        mockMvc.perform(get("/api/v1/")
+        mockMvc.perform(get("/api/v1")
                         .param("page", String.valueOf(pageable.getOffset()))
                         .param("size", String.valueOf(pageable.getPageSize())))
                 .andExpect(status().isOk())
