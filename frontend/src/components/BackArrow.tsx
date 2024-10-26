@@ -8,13 +8,13 @@ export default function BackArrow(): JSX.Element {
   const goBack = () => {
     if (location.pathname === '/result') {
       navigate('/search');
-    } else if (location.pathname === '/search') {
+    } else {
       navigate('/');
     }
   };
 
   return (
-    <div className="h-custom-height-60 items-center bg-custom-green px-5 py-4">
+    <div className="h-custom-height-60 items-center bg-transparent px-5 py-4">
       <button onClick={goBack}>
         <BackArrowImg />
       </button>
