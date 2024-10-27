@@ -17,11 +17,11 @@ export default function SearchHeader({
   };
   return (
     <div className="sticky top-0">
-      <div className="border-b-2 border-black">
+      <div className="border-b-2 border-black bg-custom-green">
         <BackArrow />
         <div
           onClick={handleMoveSearch}
-          className="flex h-custom-height-82 flex-row items-center justify-between bg-custom-green px-5 pb-4"
+          className="flex h-custom-height-82 flex-row items-center justify-between px-5 pb-4"
         >
           <div className="relative w-full">
             <input

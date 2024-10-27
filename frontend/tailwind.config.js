@@ -46,6 +46,7 @@ module.exports = {
         'custom-middle-gray': '#CBCBCB',
         'custom-light-gray': '#F5F5F5',
         'custom-bg-gray': '#424242',
+        'custom-text-middle-gray': '#8B8B8B',
       },
       width: {
         'custom-card-image': '165px',

@@ -7,6 +7,8 @@ import NotFound from './pages/NotFound';
 import LoadingScreen from './components/LoadingScreen';
 import Onboarding from './components/Onboarding';
 import useResetCategory from './hooks/useResetCategory';
+import Login from './pages/Login';
+import RedirectLogin from './pages/RedirectLogin';
 
 function App(): JSX.Element {
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -39,6 +41,8 @@ function App(): JSX.Element {
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/result" element={<Result />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/auth/kakao/callback" element={<RedirectLogin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <LoadingScreen />
